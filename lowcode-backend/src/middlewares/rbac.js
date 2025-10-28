@@ -1,0 +1,1 @@
+export function soloAdmin(req,res,next){ return req.usuario?.rol==='admin' ? next() : res.status(403).json({error:'Solo administradores'}); }

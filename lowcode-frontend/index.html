@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plataforma Low-Code</title>
+
+    <!-- Fuentes opcionales -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- ✅ APLICAR TEMA ANTES DEL BUNDLE -->
+    <script>
+      (function () {
+        try {
+          const saved = localStorage.getItem('lc-theme');
+          const root = document.documentElement;
+          if (saved === 'dark') {
+            root.setAttribute('data-theme', 'dark');
+          } else if (saved === 'light') {
+            root.setAttribute('data-theme', 'light'); // <-- fuerza claro
+          } else {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (prefersDark) root.setAttribute('data-theme', 'dark');
+          }
+        } catch {}
+      })();
+    </script>
+
+    <!-- luego tu bundle -->
+    <script type="module" src="/src/main.jsx"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

@@ -1,0 +1,740 @@
+/* Fuente */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ========================
+   Tokens de diseño (light)
+======================== */
+:root{
+  /* Colores base */
+  --bg:          #f7f8fb;
+  --surface:     #ffffff;
+  --surface-2:   #f2f5f9;
+  --text:        #0f172a;
+  --text-weak:   #475569;
+  --muted:       #64748b;
+
+  /* Marca / estados */
+  --brand:       #2563eb;
+  --brand-600:   #1d4ed8;
+  --success:     #16a34a;
+  --danger:      #ef4444;
+  --warning:     #f59e0b;
+
+  /* Bordes/sombras */
+  --border:      1px solid rgba(15,23,42,.08);
+  --ring:        0 0 0 3px rgba(37,99,235,.18);
+  --shadow-1:    0 6px 18px rgba(2,6,23,.06);
+  --shadow-2:    0 12px 36px rgba(2,6,23,.08);
+
+  /* Radio/espaciado */
+  --radius:      14px;
+  --radius-sm:   10px;
+  --container:   1280px; /* ← más ancho que antes */
+  --gap:         12px;
+
+  /* Code/UI */
+  --code-bg:     #0f172a;
+  --kbd:         #e2e8f0;
+
+  /* Tipografía */
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-16: 16px;
+  --fs-18: 18px;
+  --fs-22: 22px;
+}
+
+/* ========================
+   Modo oscuro automático
+======================== */
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0b1020; --surface:#12172a; --surface-2:#0f1528;
+    --text:#e5e7eb; --text-weak:#cbd5e1; --muted:#94a3b8;
+    --border:1px solid rgba(255,255,255,.08);
+    --ring:0 0 0 3px rgba(37,99,235,.28);
+    --shadow-1:0 8px 20px rgba(0,0,0,.35);
+    --shadow-2:0 18px 40px rgba(0,0,0,.45);
+    --code-bg:#0b0f1a; --kbd:#1f2937;
+  }
+}
+/* Forzar modo con data-theme="dark" si más tarde agregas un switch */
+:root[data-theme="dark"]{
+  --bg:#0b1020; --surface:#12172a; --surface-2:#0f1528;
+  --text:#e5e7eb; --text-weak:#cbd5e1; --muted:#94a3b8;
+  --border:1px solid rgba(255,255,255,.08);
+  --ring:0 0 0 3px rgba(37,99,235,.28);
+  --shadow-1:0 8px 20px rgba(0,0,0,.35);
+  --shadow-2:0 18px 40px rgba(0,0,0,.45);
+  --code-bg:#0b0f1a; --kbd:#1f2937;
+}
+
+/* ========================
+   Base y utilitarios
+======================== */
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+.container{max-width:var(--container); margin:0 auto; padding:0 16px}
+.section{padding:28px 0 40px}
+.row{display:flex; align-items:center}
+.stack>*+*{margin-top:var(--gap)}
+.grid{display:grid; gap:16px}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.muted{color:var(--text-weak)}
+.mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace}
+
+/* ========================
+   Navegación (más limpia)
+======================== */
+.nav{
+  position:sticky; top:0; z-index:40;
+  backdrop-filter:saturate(1.2) blur(8px);
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  border-bottom: var(--border);
+}
+.nav-inner{display:flex; justify-content:space-between; align-items:center; height:64px}
+.brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px}
+.brand-dot{width:10px; height:10px; border-radius:999px; background:linear-gradient(90deg,var(--brand),#8b5cf6)}
+.badge{border:1px solid rgba(0,0,0,.04); background:rgba(0,0,0,.03); padding:4px 8px; border-radius:999px; font-size:var(--fs-12); color:var(--text-weak)}
+.nav-links{display:flex; gap:8px; flex-wrap:wrap}
+.nav .link{
+  color:var(--text-weak); text-decoration:none; padding:8px 12px; border-radius:10px; transition:.18s all;
+}
+.nav .link:hover{color:var(--text); background:rgba(2,6,23,.06)}
+@media (prefers-color-scheme: dark){
+  .nav .link:hover{background:rgba(255,255,255,.06)}
+}
+
+/* ========================
+   KPIs (alineación y aire)
+======================== */
+.kpis{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin:16px 0}
+.kpi{
+  background:var(--surface); border:var(--border); border-radius:var(--radius);
+  padding:14px 16px; box-shadow:var(--shadow-1);
+}
+.kpi > .muted{font-size:var(--fs-13)}
+.kpi b{font-size:var(--fs-22); letter-spacing:.2px}
+
+/* ========================
+   Tarjetas
+======================== */
+.card{
+  background:var(--surface); border:var(--border); border-radius:var(--radius);
+  box-shadow:var(--shadow-1);
+}
+.card-body{padding:16px}
+.card-title{margin:0 0 6px 0; font-size:var(--fs-18)}
+
+/* ========================
+   Botones (minimal)
+======================== */
+.btn{
+  appearance:none; border:var(--border); background:var(--surface); color:var(--text);
+  padding:10px 14px; border-radius:12px; cursor:pointer; transition:.18s all;
+  box-shadow:none;
+}
+.btn:hover{transform:translateY(-1px); background:var(--surface-2)}
+.btn:active{transform:translateY(0)}
+.btn-primary{background:var(--brand); border-color:var(--brand); color:#fff}
+.btn-primary:hover{background:var(--brand-600)}
+.btn-outline{background:transparent}
+.btn-ghost{background:transparent; border-color:transparent}
+.btn[disabled]{opacity:.6; cursor:not-allowed}
+
+/* ========================
+   Chips / Badges
+======================== */
+.chips{display:flex; flex-wrap:wrap; gap:8px}
+.chip{border:var(--border); background:var(--surface-2); padding:6px 10px; border-radius:999px; font-size:var(--fs-12)}
+.badge-success{background:rgba(22,163,74,.12); color:#15803d; border:1px solid rgba(22,163,74,.25)}
+.badge-danger{background:rgba(239,68,68,.12); color:#b91c1c; border:1px solid rgba(239,68,68,.25)}
+
+/* ========================
+   Formularios
+======================== */
+label{display:block; font-size:var(--fs-13); color:var(--text-weak); margin-bottom:6px}
+input, select, textarea{
+  width:100%; border:var(--border); background:var(--surface); color:var(--text);
+  border-radius:12px; padding:10px 12px; outline:none; transition:.18s box-shadow, .18s border-color;
+}
+input:focus, select:focus, textarea:focus{box-shadow:var(--ring); border-color:var(--brand)}
+::placeholder{color:color-mix(in srgb, var(--text-weak) 65%, transparent)}
+
+/* ========================
+   Tabla (filas “chips”)
+======================== */
+.table{width:100%; border-collapse:separate; border-spacing:0 10px}
+.table thead th{
+  font-size:var(--fs-12); text-transform:uppercase; letter-spacing:.06em;
+  color:var(--text-weak); text-align:left; padding:0 12px;
+}
+.table tbody tr{background:var(--surface); border:var(--border); box-shadow:var(--shadow-1)}
+.table tbody td{padding:12px}
+.table tbody tr td:first-child{border-top-left-radius:12px; border-bottom-left-radius:12px}
+.table tbody tr td:last-child{border-top-right-radius:12px; border-bottom-right-radius:12px}
+
+/* ========================
+   Editor / Código
+======================== */
+.editor-wrap{
+  display:grid;
+  grid-template-columns: 1.55fr 1fr;   /* ← editor más ancho */
+  gap:22px;
+  margin-top:16px;
+}
+.editor-pane{
+  border:var(--border); background:var(--surface); border-radius:16px;
+  overflow:hidden;
+}
+.editor-toolbar{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:12px 14px;
+  background:var(--surface-2); border-bottom:var(--border)
+}
+.blockly-container{
+  height: 78vh !important;   /* ← más alto */
+  min-height: 560px;
+  width: 100%;
+}
+.code{
+  background:var(--code-bg); color:#e5e7eb; padding:12px; border-radius:12px;
+  border:var(--border); overflow:auto; font-size:var(--fs-13);
+  min-height: 52vh;          /* ← más alto */
+}
+
+/* (Opcional) estilo del separador arrastrable si lo usas */
+.gutter{
+  width:12px; cursor:col-resize;
+  background:transparent;
+}
+.gutter:hover{ background:rgba(2,6,23,.06) }
+html[data-theme="dark"] .gutter:hover{ background:rgba(255,255,255,.06) }
+
+/* ========================
+   Modal (discreto)
+======================== */
+.modal-backdrop{
+  position:fixed; inset:0; background:rgba(2,6,23,.35);
+  display:flex; align-items:center; justify-content:center; z-index:999;
+}
+.modal{
+  background:var(--surface); border:var(--border); border-radius:16px;
+  width:92%; max-width:560px; padding:18px; box-shadow:var(--shadow-2);
+}
+.modal h3{margin:0 0 6px 0}
+
+/* ========================
+   Scrollbar sutil
+======================== */
+*::-webkit-scrollbar{height:10px; width:10px}
+*::-webkit-scrollbar-thumb{background:rgba(2,6,23,.15); border-radius:999px}
+*::-webkit-scrollbar-thumb:hover{background:rgba(2,6,23,.24)}
+@media (prefers-color-scheme: dark){
+  *::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16)}
+  *::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.25)}
+}
+
+/* ========================
+   Animación sutil
+======================== */
+@keyframes fadeInUp{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+.card, .modal, .kpi, .editor-pane{animation:fadeInUp .22s ease-out}
+
+/* ========================
+   Responsivo
+======================== */
+@media (max-width: 1280px){
+  .blockly-container{ height: 74vh !important; }
+}
+@media (max-width: 1024px){
+  .editor-wrap{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .blockly-container{ height: 60vh !important; }
+}
+@media (max-width: 640px){
+  .grid-3,.grid-2{grid-template-columns:1fr}
+  .kpis{grid-template-columns:1fr}
+  .nav-inner{height:auto; padding:10px 0}
+}
+
+/* Toggle de tema estilo “pill” */
+.pill-toggle{
+  position:relative; display:inline-flex; align-items:center; gap:8px;
+  padding:6px 10px; border-radius:999px; border:var(--border);
+  background:var(--surface); color:var(--text-weak);
+  cursor:pointer; transition:.18s all; line-height:1;
+}
+.pill-toggle:hover{ background:var(--surface-2); color:var(--text); }
+.pill-thumb{
+  position:absolute; top:3px; bottom:3px; width:28px; border-radius:999px;
+  background:color-mix(in srgb, var(--brand) 18%, var(--surface));
+  box-shadow:0 2px 6px rgba(0,0,0,.12);
+  transition: transform .18s ease;
+}
+.pill-thumb.is-left{ transform:translateX(3px); }
+.pill-thumb.is-right{ transform:translateX(37px); }
+.pill-icons{ display:inline-flex; align-items:center; gap:10px; padding-left:6px; padding-right:6px; z-index:1; }
+.pill-label{ font-size:12px; padding-right:6px; z-index:1; }
+
+/* =======================================================
+   OVERRIDES MANUALES DE TEMA (DEBEN IR AL FINAL)
+   ======================================================= */
+html[data-theme="dark"]{
+  --bg:#0b1020;
+  --surface:#12172a;
+  --surface-2:#0f1528;
+
+  --text:#e5e7eb;
+  --text-weak:#cbd5e1;
+  --muted:#94a3b8;
+
+  --border:1px solid rgba(255,255,255,.08);
+  --ring:0 0 0 3px rgba(37,99,235,.28);
+  --shadow-1:0 8px 20px rgba(0,0,0,.35);
+  --shadow-2:0 18px 40px rgba(0,0,0,.45);
+
+  --code-bg:#0b0f1a;
+  --kbd:#1f2937;
+}
+
+html[data-theme="light"]{
+  --bg:          #f7f8fb;
+  --surface:     #ffffff;
+  --surface-2:   #f2f5f9;
+  --text:        #0f172a;
+  --text-weak:   #475569;
+  --muted:       #64748b;
+
+  --border:      1px solid rgba(15,23,42,.08);
+  --ring:        0 0 0 3px rgba(37,99,235,.18);
+  --shadow-1:    0 6px 18px rgba(2,6,23,.06);
+  --shadow-2:    0 12px 36px rgba(2,6,23,.08);
+
+  --code-bg:     #0f172a;
+  --kbd:         #e2e8f0;
+}
+
+/* Activo en Nav */
+.nav .link.is-active{
+  color: var(--text);
+  background: rgba(2,6,23,.06);
+}
+@media (prefers-color-scheme: dark){
+  .nav .link.is-active{ background: rgba(255,255,255,.06); }
+}
+
+/* Nav ordenada */
+.nav-inner{ display:flex; align-items:center; justify-content:space-between; height:64px; }
+.nav-primary{ display:flex; gap:8px; align-items:center; }
+.nav-actions{ display:flex; gap:8px; align-items:center; }
+.nav .link svg{ opacity:.8 }
+.nav .link:hover svg{ opacity:1 }
+
+/* Dropdown minimal */
+.menu{ position:relative; }
+.menu-button{
+  appearance:none; border:var(--border); background:var(--surface);
+  color:var(--text); border-radius:12px; padding:8px 12px; cursor:pointer;
+}
+.menu-button.btn-ghost{ background:transparent; border-color:var(--border); }
+.menu-button:hover{ background:var(--surface-2); }
+.menu-panel{
+  position:absolute; right:0; top:calc(100% + 8px);
+  min-width:260px; background:var(--surface); border:var(--border);
+  border-radius:12px; box-shadow:var(--shadow-2); padding:6px;
+  animation: fadeInUp .18s ease-out;
+  z-index: 100;
+}
+.menu-item{
+  display:flex; align-items:center; gap:8px;
+  padding:10px 10px; border-radius:10px; color:var(--text); text-decoration:none;
+}
+.menu-item:hover{ background:var(--surface-2); }
+
+/* Responsive Nav */
+@media (max-width: 860px){
+  .nav-primary{ display:none; }
+}
+
+/* =========================================================
+   BLOQUES: Scrollbar visible y más “agarrable” (Blockly)
+   ========================================================= */
+
+/* Hace visibles las barras de desplazamiento internas de Blockly
+   (tanto en el workspace como en el flyout del toolbox). */
+.blocklyScrollbarVertical,
+.blocklyScrollbarHorizontal {
+  opacity: 1 !important;
+}
+
+/* Grosor/estética del “handle” (la parte que arrastras). */
+.blocklyScrollbarHandle {
+  fill: rgba(2, 6, 23, .30);        /* light */
+}
+html[data-theme="dark"] .blocklyScrollbarHandle {
+  fill: rgba(255, 255, 255, .28);   /* dark */
+}
+
+/* Fondo de la pista de la barra (ligero para no distraer). */
+.blocklyScrollbarBackground {
+  fill: transparent;
+}
+
+/* Permite que el flyout use desplazamiento nativo si hace falta.
+   (Blockly ya gestiona su propio scroll; esto es un “fallback”
+   para navegadores/configs donde no se pinta bien). */
+.blocklyFlyout {
+  overflow: auto !important;
+}
+
+/* =========================================================
+   PANEL IZQUIERDO: que pueda desplazarse si hay overflow
+   ========================================================= */
+
+/* Asegura que el contenedor inmediato del editor permita scroll vertical
+   cuando el contenido (flyout/bloques) sea más alto que el panel. */
+.editor-pane > div {
+  max-height: 82vh;          /* igual o un poco más que .blockly-container */
+  overflow: auto;            /* ← barra nativa si se desborda */
+}
+
+/* Mantén el workspace alto (de tu ajuste previo) */
+.blockly-container{
+  height: 78vh !important;
+  min-height: 560px;
+  width: 100%;
+}
+
+/* (Opcional) scrollbar nativo más amable en ese panel */
+.editor-pane > div::-webkit-scrollbar { width: 10px; }
+.editor-pane > div::-webkit-scrollbar-thumb {
+  background: rgba(2,6,23,.15);
+  border-radius: 999px;
+}
+html[data-theme="dark"] .editor-pane > div::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.18);
+}
+
+/* ====== Layout Shell (barra + sidebar opcional) ====== */
+.app-shell{display:grid; grid-template-columns: 260px 1fr; min-height:calc(100vh - 64px); gap:18px;}
+.app-shell.collapse{grid-template-columns:1fr;}
+.sidebar{
+  position:sticky; top:72px; height:calc(100vh - 88px);
+  background:var(--surface); border:var(--border); border-radius:16px; box-shadow:var(--shadow-1);
+  padding:12px; overflow:auto;
+}
+.sidebar .group{margin-bottom:10px;}
+.sidebar .group-title{font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--text-weak); margin:8px 8px;}
+.sidebar .item{
+  display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; color:var(--text);
+  text-decoration:none; transition:.16s background;
+}
+.sidebar .item:hover{background:var(--surface-2)}
+.sidebar .item.is-active{background:color-mix(in srgb, var(--brand) 12%, var(--surface-2)); border:1px solid color-mix(in srgb, var(--brand) 30%, transparent)}
+
+/* ====== Tarjetas pro ====== */
+.card:hover{transform:translateY(-2px); box-shadow:var(--shadow-2)}
+.card{transition:transform .18s ease, box-shadow .18s ease}
+
+/* ====== Tabs minimal ====== */
+.tabs{display:flex; gap:6px; border-bottom:var(--border); margin:8px 0 14px}
+.tab{
+  padding:8px 12px; border-radius:10px 10px 0 0; color:var(--text-weak); text-decoration:none; border:1px solid transparent;
+}
+.tab.is-active{color:var(--text); background:var(--surface); border-color:rgba(0,0,0,.06); border-bottom-color:var(--surface)}
+@media (prefers-color-scheme: dark){ .tab.is-active{border-color:rgba(255,255,255,.08)} }
+
+/* ====== Botones refinados ====== */
+.btn{position:relative; overflow:hidden}
+.btn::after{
+  content:""; position:absolute; inset:0; opacity:0; transition:opacity .18s; 
+  background:radial-gradient(120px 120px at var(--x,50%) var(--y,50%), rgba(255,255,255,.18), transparent 40%);
+}
+.btn:hover::after{opacity:.4}
+
+/* ====== Progreso y métricas ====== */
+.progress{height:10px; background:var(--surface-2); border-radius:999px; overflow:hidden; border:var(--border)}
+.progress > span{display:block; height:100%; background:var(--brand); width:0}
+
+/* ====== Toasts ====== */
+.toast-wrap{position:fixed; right:18px; bottom:18px; display:grid; gap:10px; z-index:9999}
+.toast{
+  background:var(--surface); border:var(--border); padding:12px 14px; border-radius:12px; box-shadow:var(--shadow-2);
+  animation:fadeInUp .22s ease-out;
+}
+
+/* ====== Skeletons ====== */
+.skeleton{background:linear-gradient(90deg, rgba(0,0,0,.06), rgba(0,0,0,.04), rgba(0,0,0,.06)); 
+  background-size:200% 100%; animation:skeleton 1.2s infinite linear; border-radius:10px}
+@keyframes skeleton{0%{background-position:200% 0} 100%{background-position:-200% 0}}
+
+/* ====== Command bar (Ctrl/Cmd+K) ====== */
+.kbar{position:fixed; inset:0; display:none; place-items:center; background:rgba(2,6,23,.35); z-index:9999}
+.kbar.open{display:grid}
+.kbar-panel{width:min(720px, 92vw); background:var(--surface); border:var(--border); border-radius:16px; box-shadow:var(--shadow-2); overflow:hidden}
+.kbar-head{padding:10px 12px; border-bottom:var(--border); display:flex; gap:8px; align-items:center}
+.kbar-body{max-height:60vh; overflow:auto}
+.kbar-item{padding:10px 12px; border-bottom:1px solid rgba(0,0,0,.04); cursor:pointer}
+.kbar-item:hover{background:var(--surface-2)}
+@media (prefers-color-scheme: dark){ .kbar-item{border-bottom:1px solid rgba(255,255,255,.06)} }
+
+/* ====== Flyout con scroll (Blockly) ====== */
+.blocklyToolboxDiv{max-height:74vh; overflow:auto; scrollbar-gutter:stable}
+
+/* =========================================================
+   AUTH (Login) – Estilo Pro, minimal & responsive
+   ========================================================= */
+
+.auth{
+  min-height: calc(100vh - 64px); /* considerando la nav fija; ajusta si no hay nav */
+  display: grid;
+  grid-template-columns: 1.1fr 1fr; /* panel visual + panel formulario */
+  gap: 0;
+}
+
+.auth-hero{
+  position: relative;
+  background:
+    radial-gradient(100% 70% at 0% 0%, color-mix(in srgb, var(--brand) 12%, transparent), transparent 60%),
+    radial-gradient(80% 80% at 100% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 62%),
+    var(--surface);
+  border-right: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 42px;
+  overflow: hidden;
+}
+.auth-hero .hero-card{
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
+  border-radius: 18px;
+  box-shadow: var(--shadow-2);
+  padding: 28px;
+  max-width: 520px;
+  width: 100%;
+}
+.hero-kpi{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.hero-kpi .k{
+  background: var(--surface);
+  border: var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+}
+.hero-kpi .k b{ font-size: 18px; }
+.hero-kpi .k .label{ font-size: 12px; color: var(--text-weak); }
+
+.auth-form{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 42px 24px;
+}
+.auth-card{
+  width: 100%;
+  max-width: 440px;
+  background: var(--surface);
+  border: var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow-2);
+  padding: 24px 22px;
+}
+
+.auth-brand{
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px;
+}
+.auth-brand .dot{
+  width: 12px; height: 12px; border-radius: 999px;
+  background: linear-gradient(135deg, var(--brand), var(--accent));
+}
+.auth-title{ margin: 0; }
+.auth-subtitle{ color: var(--text-weak); margin: 4px 0 14px 0; }
+
+.field{ margin-top: 12px; }
+.field label{
+  display: block; font-size: 13px; color: var(--text-weak); margin-bottom: 6px;
+}
+.input{
+  width: 100%; border: var(--border); background: var(--surface); color: var(--text);
+  border-radius: 12px; padding: 12px 12px; outline: none;
+  transition: box-shadow .18s ease, border-color .18s ease, background .18s ease;
+}
+.input:focus{ box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 20%, transparent); border-color: var(--brand-600); }
+.input-lg{ padding: 14px 14px; font-size: 16px; border-radius: 14px; }
+
+.input-with-btn{
+  position: relative;
+}
+.input-with-btn .toggle-btn{
+  position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+  border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+  background: var(--surface-2); color: var(--text);
+  border-radius: 10px; padding: 6px 10px; cursor: pointer;
+}
+.input-with-btn .toggle-btn:hover{ background: color-mix(in srgb, var(--surface-2) 88%, var(--surface)); }
+
+.auth-actions{
+  display:flex; justify-content:space-between; align-items:center; gap: 10px; margin-top: 14px;
+}
+.auth-footer{
+  margin-top: 14px; display:flex; justify-content:space-between; align-items:center; gap:10px;
+  color: var(--text-weak); font-size: 13px;
+}
+
+.divider{
+  display:flex; align-items:center; gap:10px; color: var(--text-weak); font-size: 12px; margin: 10px 0;
+}
+.divider::before, .divider::after{
+  content:""; flex:1; height:1px; background: color-mix(in srgb, var(--text) 10%, transparent);
+  border-radius: 999px;
+}
+
+/* Botones sociales (opcional) */
+.btn-social{
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  width:100%;
+}
+
+/* Responsive */
+@media (max-width: 1024px){
+  .auth{ grid-template-columns: 1fr; }
+  .auth-hero{ display: none; } /* en tablets/móvil mostramos solo el formulario */
+}
+
+/* ======== Detalles visuales “extra” para Admin/Estudiante ======== */
+
+/* Tarjeta héroe con gradiente */
+.card--hero{
+  background: linear-gradient(135deg, color-mix(in srgb, var(--brand) 18%, transparent), rgba(139,92,246,.12));
+  border: var(--border);
+}
+
+/* Elevación sutil en tarjetas clave */
+.card--elev{
+  box-shadow: var(--shadow-2);
+}
+
+/* KPIs con fondo suave */
+.kpi.kpi--soft{
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  box-shadow: var(--shadow-1);
+}
+
+/* Badge con gradiente */
+.badge--gradient{
+  background: linear-gradient(90deg, var(--brand), #8b5cf6);
+  color: #fff;
+  border: none;
+}
+
+/* Chips con iconitos (usa .icon dentro) */
+.chips--icons .chip{
+  display: inline-flex; align-items: center; gap: 8px;
+}
+
+/* Icono minimal reutilizable (puedes meter emoji o SVG) */
+.icon{
+  display:inline-grid; place-items:center;
+  width: 18px; height: 18px; border-radius: 6px;
+  background: color-mix(in srgb, var(--brand) 14%, var(--surface));
+  color: var(--text);
+  font-size: 12px; line-height: 1;
+  opacity: .9;
+}
+
+/* Hover de tabla más “pro” */
+.table.table--hover tbody tr{
+  transition: background .16s ease, transform .16s ease;
+}
+.table.table--hover tbody tr:hover{
+  background: color-mix(in srgb, var(--surface-2) 70%, transparent);
+  transform: translateY(-1px);
+}
+
+/* MiniBar para Likert */
+.minibar{
+  width:100%;
+  background: var(--surface-2);
+  border: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+  height: 8px;
+}
+.minibar > div{
+  height: 100%;
+  background: linear-gradient(90deg, var(--brand), #8b5cf6);
+  transition: width .25s ease;
+}
+
+/* Botones pills secundarios “social” (si quieres reusar) */
+.btn-secondary{
+  background: color-mix(in srgb, var(--brand) 10%, var(--surface));
+  border-color: color-mix(in srgb, var(--brand) 18%, var(--surface));
+}
+.btn-pill{ border-radius: 999px; }
+
+/* Ajustes finos */
+.card-title{ display:flex; align-items:center; gap:8px; }
+
+/* Icon wrappers y SVGs */
+.icon { display:inline-grid; place-items:center; }
+.icon svg { width: 16px; height: 16px; display:block; }
+.kpi .icon svg { width: 18px; height: 18px; }
+
+/* ====== Gráficos: paleta coherente ====== */
+:root{
+  --chart-blue:   #2563eb; /* var(--brand) */
+  --chart-violet: #8b5cf6;
+  --chart-green:  #22c55e; /* éxito suave */
+  --chart-amber:  #f59e0b;
+  --chart-slate:  #94a3b8;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --chart-blue:   #3b82f6;
+    --chart-violet: #a78bfa;
+    --chart-green:  #34d399;
+    --chart-amber:  #fbbf24;
+    --chart-slate:  #a3b2c5;
+  }
+}
+html[data-theme="dark"]{
+  --chart-blue:   #3b82f6;
+  --chart-violet: #a78bfa;
+  --chart-green:  #34d399;
+  --chart-amber:  #fbbf24;
+  --chart-slate:  #a3b2c5;
+}
+
+/* Tooltip de Recharts (fallback si se usa contenido por defecto) */
+.recharts-default-tooltip{
+  border: var(--border) !important;
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  box-shadow: var(--shadow-1) !important;
+  border-radius: 10px !important;
+  padding: 8px 10px !important;
+}
+
+/* Mini barra usada en tablas rápidas (ya la usas) */
+.minibar{
+  width:100%; background:var(--surface-2); border:var(--border);
+  border-radius:999px; overflow:hidden; height:8px;
+}
+.minibar > div{ height:100%; background: linear-gradient(90deg, var(--chart-blue), var(--chart-violet)); }
+
