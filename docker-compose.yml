@@ -1,20 +1,19 @@
-version: "3.9"
-
 services:
   db:
-    image: mysql:8
+    image: mysql:8.0
     container_name: db
     environment:
       MYSQL_ROOT_PASSWORD: pass
       MYSQL_DATABASE: lowcode_es
       MYSQL_USER: lowuser
       MYSQL_PASSWORD: lowpass
+      TZ: America/Guatemala
     volumes:
       - db_data:/var/lib/mysql
       - ./db/init:/docker-entrypoint-initdb.d:ro
-    networks: [ appnet ]
+    networks: [appnet]
     ports:
-      - "3306:3306"
+      - "3307:3306"
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -ppass --silent"]
       interval: 5s
@@ -25,6 +24,7 @@ services:
   backend:
     build:
       context: ./lowcode-backend
+      dockerfile: Dockerfile
     image: lowcode-backend:dev
     container_name: backend
     depends_on:
@@ -38,30 +38,36 @@ services:
       DB_PORT: 3306
       DB_USER: lowuser
       DB_PASS: lowpass
+      DB_PASSWORD: lowpass   # por compatibilidad si tu código usa DB_PASSWORD
       DB_NAME: lowcode_es
       FRONT_URL: "http://localhost:8080"
       MAIL_FROM: "no-reply@lowcode.local"
-      # Si luego configuras SMTP real, agrega:
+      NODE_OPTIONS: "--trace-uncaught --unhandled-rejections=strict"
       # SMTP_HOST: ""
       # SMTP_PORT: ""
       # SMTP_USER: ""
       # SMTP_PASS: ""
+      CORS_ORIGIN: "*"       # quítalo o ajústalo en prod
     ports:
       - "4000:4000"
-    networks: [ appnet ]
+    networks: [appnet]
     restart: unless-stopped
 
   frontend:
     build:
       context: ./lowcode-frontend
+      dockerfile: Dockerfile
+      args:
+        # Si tu app usa VITE_API_BASE, la fijamos a /api (será proxy a backend)
+        VITE_API_BASE: /api
     image: lowcode-frontend:dev
     container_name: frontend
     depends_on: [ backend ]
     ports:
       - "8080:80"
-    networks: [ appnet ]
+    networks: [appnet]
     restart: unless-stopped
-    # IMPORTANTE: la imagen debe incluir un nginx.conf que haga proxy /api -> backend:4000
+    # IMPORTANTE: la imagen incluye un nginx.conf que hace proxy /api -> backend:4000
 
 volumes:
   db_data:
